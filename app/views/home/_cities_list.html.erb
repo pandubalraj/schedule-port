@@ -1,0 +1,5 @@
+<%unless @cities.blank? %>
+<%=select_tag "cities", options_for_select(@cities.collect{|x| [x.name,x.id]}), {:size => "5",:style=>"width:400px"} %>
+<%else%>
+<select name='cities' size="5" style="width:400px;"></select>
+<%end%>

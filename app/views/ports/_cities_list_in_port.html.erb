@@ -1,0 +1,5 @@
+<%unless @cities.blank? %>
+<%=f.select :city_id, options_for_select(@cities.collect{|x| [x.name,x.id]})%>
+<%else%>
+<select name='city_id'><option>Select</option></select>
+<%end%>

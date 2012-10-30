@@ -1,0 +1,29 @@
+<h1>Listing countries</h1>
+<p id="notice"><%= notice %></p>
+<table class="imagetable">
+  <tr>
+    <th>Name</th>
+    <!--<th></th>-->
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @countries.each do |country| %>
+  <tr>
+    <td><%= country.name %></td>
+    <!-- <td><%#= link_to 'Show', country %></td> -->
+    <td><%= link_to 'Edit', edit_country_path(country) %></td>
+    <td><%= link_to 'Delete', country, method: :delete, data: { confirm: 'Are you sure?' }, :remote=>true,:class=>'delete_post' %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Country', new_country_path %>
+<script>
+$('.delete_post').bind('ajax:success', function() {  
+    $(this).closest('tr').fadeOut();  
+});
+
+</script>

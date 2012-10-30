@@ -1,0 +1,50 @@
+<h2 style="text-align:center">Schedule Port List</h2>
+
+
+<span id="schedule_country" style="padding:10px;margin-left:10px;margin-top:10px">
+<%=select_tag "country", options_for_select(Country.all.collect{|x| [x.name,x.id]}), {:size => "5",:style=>"width:400px"} %>
+</span>
+
+<span id='country_cities_list' style="padding:10px">
+<%=render :partial=>'cities_list'%>
+</span>
+
+<span id='city_ports_list' style="padding:10px">
+<%=render :partial=>'ports_list'%>
+</span>
+
+
+<div id='cargo_list' style='text-align:center;margin-top:30px;'>
+</div>
+
+<script>
+$('#schedule_country').change(function() { 
+  var country = $('#schedule_country :selected').text();
+  var country_id = $('#schedule_country :selected').val();
+  $.ajax(
+	{
+	type:"GET",
+        url: "/city_list",
+        data: { name: country, id: country_id},
+        }); 
+   $('#city_ports_list').find('option').remove()
+});
+
+
+$('#country_cities_list').change(function() { 
+  var city = $('#country_cities_list :selected').text();
+  var city_id = $('#country_cities_list :selected').val();
+  $.ajax({
+	type:"GET",
+        url: "/port_list",
+        data: { name: city, id: city_id},
+        }); 
+
+});
+
+$('#city_ports_list').change(function() { 
+var city = $('#city_ports_list :selected').text();
+$('#cargo_list').html("<h3>"+city+" schedule list</h3>")
+});
+</script>
+

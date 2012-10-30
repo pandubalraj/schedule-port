@@ -1,0 +1,5 @@
+<%unless @cities.blank? %>
+<%=select_tag "city_id", options_for_select(@cities.collect{|x| [x.name,x.id]}) %>
+<%else%>
+<select name='cities'><option>Select</option></select>
+<%end%>

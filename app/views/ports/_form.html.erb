@@ -1,0 +1,50 @@
+<%= form_for(@port) do |f| %>
+  <% if @port.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@port.errors.count, "error") %> prohibited this port from being saved:</h2>
+
+      <ul>
+      <% @port.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  
+  <div class="field">
+    Country<br />
+    <%= select_tag "country", options_from_collection_for_select(Country.all, "id", "name"), :prompt => "Select" %>
+  </div>
+
+   City     
+  <div id='country_cities_list'>
+  <%=render :partial=>'ports/cities_list_in_port'%>
+  </div>
+
+  <!--<div class="field">
+    <%#= f.label :city_id %><br />
+    <%#= f.select :city_id, City.all.collect {|a| [a.name, a.id]} %>
+  </div>-->
+  <br/>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+
+<script>
+$('#country').change(function(){
+var country = $('#country :selected').text();
+var country_id = $('#country :selected').val();
+$.ajax({
+	type:"GET",
+        url: "/city_list_in_port",
+        data: { name: country , id: country_id},
+        }); 
+});
+</script>
